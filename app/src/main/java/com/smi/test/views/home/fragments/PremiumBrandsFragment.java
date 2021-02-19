@@ -3,47 +3,48 @@ package com.smi.test.views.home.fragments;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.smi.test.R;
+import com.smi.test.models.Brand;
+import com.smi.test.views.home.HomeActivity;
+import com.smi.test.views.home.adapters.BrandAdapter;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link PremiumBrandsFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class PremiumBrandsFragment extends Fragment {
+import java.util.ArrayList;
+import java.util.List;
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+
+public class PremiumBrandsFragment extends Fragment implements BrandAdapter.OnBrandClickListener {
+
+    private static final String TAG = PremiumBrandsFragment.class.getName();
+    private static final String BrandListPremiumArgs = "BrandListPremiumArgs";
+
+
+    @BindView(R.id.premium_brands_rv)
+    RecyclerView premiumBrandRV;
+
+    private FragmentActivity mContext;
+    private BrandAdapter brandAdapter;
+    private List<Brand> premiumBrandList;
 
     public PremiumBrandsFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment PremiumBrandsFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static PremiumBrandsFragment newInstance(String param1, String param2) {
+    public static PremiumBrandsFragment newInstance(ArrayList<Brand> brandList) {
         PremiumBrandsFragment fragment = new PremiumBrandsFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
+        args.putParcelableArrayList(BrandListPremiumArgs, brandList);
         fragment.setArguments(args);
         return fragment;
     }
@@ -51,16 +52,33 @@ public class PremiumBrandsFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mContext = getActivity();
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            premiumBrandList = new ArrayList<>(getArguments().getParcelableArrayList(BrandListPremiumArgs));
         }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_premium_brands, container, false);
+        View view = inflater.inflate(R.layout.fragment_premium_brands, container, false);
+        ButterKnife.bind(this, view);
+
+        initRecyclerView();
+
+        return view;
+    }
+
+
+    private void initRecyclerView() {
+        premiumBrandList = new ArrayList<>(premiumBrandList);
+        premiumBrandRV.setLayoutManager(new GridLayoutManager(mContext, 3));
+        brandAdapter = new BrandAdapter(mContext, premiumBrandList, this::onBrandClick);
+        premiumBrandRV.setAdapter(brandAdapter);
+    }
+
+    @Override
+    public void onBrandClick(Brand brand) {
+        ((HomeActivity) mContext).switchFragment(DetailBrandFragment.newInstance(brand), DetailBrandFragment.class.getName());
     }
 }

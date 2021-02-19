@@ -1,7 +1,6 @@
 package com.smi.test.views.home.fragments;
 
 import android.app.Activity;
-import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -17,7 +16,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -30,7 +28,7 @@ import com.smi.test.R;
 import com.smi.test.models.Brand;
 import com.smi.test.models.Dashboard;
 import com.smi.test.views.base.BaseActivity;
-import com.smi.test.views.home.adapters.BrandAdapter;
+import com.smi.test.views.home.HomeActivity;
 import com.smi.test.views.home.adapters.DashboardAdapter;
 
 import org.json.JSONObject;
@@ -43,9 +41,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 
-public class SearchFragment extends Fragment {
+public class NewBrandsFragment extends Fragment implements DashboardAdapter.OnDashboardClickListener {
 
-    private static final String TAG = SearchFragment.class.getName();
+    private static final String TAG = NewBrandsFragment.class.getName();
 
     @BindView(R.id.search_bar)
     SearchView searchBar;
@@ -57,19 +55,19 @@ public class SearchFragment extends Fragment {
     LinearLayout holeContainer;
 
     private Dashboard dashboard;
-    private List<dashboard> dashboardList;
+    private List<Dashboard> newBrandList;
     private FragmentActivity mContext;
     private DashboardAdapter brandsAdapter;
     private FirebaseDatabase database;
     private DatabaseReference reference;
 
-    public SearchFragment() {
+    public NewBrandsFragment() {
         // Required empty public constructor
     }
 
 
-    public static SearchFragment newInstance() {
-        SearchFragment fragment = new SearchFragment();
+    public static NewBrandsFragment newInstance() {
+        NewBrandsFragment fragment = new NewBrandsFragment();
         Bundle args = new Bundle();
 
         fragment.setArguments(args);
@@ -89,6 +87,8 @@ public class SearchFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_search, container, false);
         ButterKnife.bind(this, view);
+
+        initNewBrandsFromFirebase();
 
         holeContainer.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -122,11 +122,10 @@ public class SearchFragment extends Fragment {
         return view;
     }
 
-    private void initDataFromFirebase(){
+    private void initNewBrandsFromFirebase() {
         Log.d(TAG, "Getting new brands");
         BaseActivity.showProgressDialog(mContext);
-        allBrandList = new ArrayList<>();
-        brandPremiumList = new ArrayList<>();
+        newBrandList = new ArrayList<>();
 
         //allBrandsFromFireBaseQuery
         Query queryBrands = reference.child(getString(R.string.dbnode_brands))
@@ -137,18 +136,17 @@ public class SearchFragment extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 BaseActivity.hideProgressDialog();
-                for (DataSnapshot brandsSnapshot: dataSnapshot.getChildren()) {
-                    Log.d(TAG, "loadBrands:onDataChange: "+ brandsSnapshot.toString());
+                for (DataSnapshot brandsSnapshot : dataSnapshot.getChildren()) {
+                    Log.d(TAG, "loadNewBrands:onDataChange: " + brandsSnapshot.toString());
                     HashMap<String, JSONObject> dataSnapshotValue = (HashMap<String, JSONObject>) brandsSnapshot.getValue();
                     String jsonString = new Gson().toJson(dataSnapshotValue);
-                    Brand brand = new Gson().fromJson(jsonString, Brand.class);
-                    allBrandList.add(brand);
-
-                    if (brand.isPremium())
-                        brandPremiumList.add(brand);
+                    Dashboard brand = new Dashboard("", "", true);
+                    brand = new Gson().fromJson(jsonString, Dashboard.class);
+                    if (brand.isNew())
+                        newBrandList.add(brand);
                 }
-                Log.d(TAG, "parsedBrands size => "+ allBrandList.size() +" \n parsedBrands =>" + allBrandList.toString());
-                Log.d(TAG, "parsedPremium size => "+ brandPremiumList.size() +" \n parsedBrands =>" + brandPremiumList.toString());
+                initSearchRecyclerView();
+                Log.d(TAG, "parsedNewBrands size => " + newBrandList.size() + " \n parsedNewBrands =>" + newBrandList.toString());
             }
 
             @Override
@@ -157,17 +155,25 @@ public class SearchFragment extends Fragment {
             }
         });
 
-
     }
 
 
-    private void initSearchRecyclerView(){
-        dashboardList = new ArrayList<>();
-        searchRV.setLayoutManager(new LinearLayoutManager(mContext,LinearLayoutManager.HORIZONTAL, false);
-        contactsAdapter = new DashboardAdapter(mContext, dashboard);
-        contactsRV.setAdapter(contactsAdapter);
+    private void initSearchRecyclerView() {
+        searchRV.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false));
+        brandsAdapter = new DashboardAdapter(mContext, newBrandList, this::onDashboardClick);
+        searchRV.setAdapter(brandsAdapter);
     }
 
+    @Override
+    public void onDashboardClick(Dashboard dashboard) {
+        ((HomeActivity) mContext).switchFragment(DetailBrandFragment.newInstanceForNewBrand(dashboard), DetailBrandFragment.class.getName());
+    }
 
-
+    @Override
+    public void onResume() {
+        super.onResume();
+        mContext = getActivity();
+        database = FirebaseDatabase.getInstance();
+        reference = database.getReference();
+    }
 }
