@@ -78,7 +78,7 @@ public class SignInFragment extends Fragment {
         FirebaseUser currentUser = mAuth.getCurrentUser();
 
         if (currentUser != null)
-            reload();
+            redirectToHome();
 
     }
 

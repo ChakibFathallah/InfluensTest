@@ -25,12 +25,11 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.DashboardVH> implements Filterable {
+public class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.DashboardVH>  {
 
     private FragmentActivity context;
     private List<Dashboard> dashboardList;
     private List<Dashboard> dashboardListFull;
-    private OnDashboardClickListener onDashboardClickListener;
 
     public DashboardAdapter(FragmentActivity context, List<Dashboard> dashboardList) {
         this.context = context;
@@ -38,11 +37,7 @@ public class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.Dash
         this.dashboardListFull = new ArrayList<>(dashboardList);
     }
 
-    public DashboardAdapter(FragmentActivity context, List<Dashboard> dashboardList, OnDashboardClickListener onDashboardClickListener) {
-        this.context = context;
-        this.dashboardList = dashboardList;
-        this.onDashboardClickListener = onDashboardClickListener;
-    }
+
 
     @NonNull
     @Override
@@ -72,54 +67,12 @@ public class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.Dash
         holder.ammount.setText(currentDashboard.getAmmount());
         holder.title.setText(currentDashboard.getName());
 
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onDashboardClickListener.onDashboardClick(currentDashboard);
-            }
-        });
     }
 
     @Override
     public int getItemCount() {
         return dashboardList.size();
     }
-
-    @Override
-    public Filter getFilter() {
-        return brandsFiltered;
-    }
-
-    Filter brandsFiltered = new Filter() {
-        @Override
-        protected FilterResults performFiltering(CharSequence constraint) {
-            List<Dashboard> filteredList = new ArrayList<>();
-            if (constraint == null || constraint.length() == 0)
-                filteredList.addAll(dashboardListFull);
-            else {
-                String filterPattern = constraint.toString().toLowerCase().trim();
-
-                for (Dashboard brand : dashboardListFull) {
-                    if (brand.getName().toLowerCase().contains(filterPattern)) {
-                        filteredList.add(brand);
-                    }
-                }
-            }
-
-            FilterResults results = new FilterResults();
-            results.values = filteredList;
-
-            return results;
-        }
-
-        @Override
-        protected void publishResults(CharSequence constraint, FilterResults results) {
-            dashboardList.clear();
-            dashboardList.addAll((List) results.values);
-            notifyDataSetChanged();
-        }
-
-    };
 
     public class DashboardVH extends RecyclerView.ViewHolder {
 
@@ -138,13 +91,6 @@ public class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.Dash
         }
     }
 
-    public interface OnDashboardClickListener {
-        void onDashboardClick(Dashboard dashboard);
-    }
-
-    public void setOnDashboardClickListener(OnDashboardClickListener onDashboardClickListener) {
-        this.onDashboardClickListener = onDashboardClickListener;
-    }
 
 
 }

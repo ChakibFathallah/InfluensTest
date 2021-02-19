@@ -27,6 +27,7 @@ import com.google.gson.annotations.SerializedName;
 import com.smi.test.R;
 import com.smi.test.models.Brand;
 import com.smi.test.models.Dashboard;
+import com.smi.test.models.NewBrand;
 import com.smi.test.models.Purchase;
 import com.smi.test.views.base.BaseActivity;
 import com.smi.test.views.home.adapters.DashboardAdapter;
@@ -63,7 +64,7 @@ public class DetailBrandFragment extends Fragment {
 
     private FragmentActivity mContext;
     private Brand brand;
-    private Dashboard newBrand;
+    private NewBrand newBrand;
     private List<Dashboard> dashboardList;
     private DashboardAdapter dashboardAdapter;
     private FirebaseDatabase database;
@@ -83,7 +84,7 @@ public class DetailBrandFragment extends Fragment {
         return fragment;
     }
 
-    public static DetailBrandFragment newInstanceForNewBrand(Dashboard newBrand) {
+    public static DetailBrandFragment newInstanceForNewBrand(NewBrand newBrand) {
         DetailBrandFragment fragment = new DetailBrandFragment();
         Bundle args = new Bundle();
         args.putParcelable(ARG_NEW_BRAND, newBrand);
@@ -97,6 +98,7 @@ public class DetailBrandFragment extends Fragment {
         mContext = getActivity();
         database = FirebaseDatabase.getInstance();
         reference = database.getReference();
+        initDataFromFirebase();
         if (getArguments() != null) {
             brand = getArguments().getParcelable(ARG_BRAND);
             newBrand = getArguments().getParcelable(ARG_NEW_BRAND);
@@ -120,11 +122,6 @@ public class DetailBrandFragment extends Fragment {
         }
 
         initRecyclerView();
-
-
-
-
-        initDataFromFirebase();
 
         return view;
     }
@@ -164,6 +161,8 @@ public class DetailBrandFragment extends Fragment {
         if (brand != null){
             if (brand.getCommissions().getCommissionGen() != null)
                 commission = brand.getCommissions().getCommissionGen();
+            //holder.img.setImageResource(currentDashboard.getImg());
+
             Dashboard dashboard1 = new Dashboard("https://res.cloudinary.com/tellmedia/image/upload/v1581430268/shopmyinfluens/Brands/classic_brands/allbeauty1.png", "236€", "Chiffres d'affaire");
             Dashboard dashboard2 = new Dashboard("https://res.cloudinary.com/tellmedia/image/upload/v1581430268/shopmyinfluens/Brands/classic_brands/allbeauty1.png", commission + "€", "Commissions");
             Dashboard dashboard3 = new Dashboard("https://res.cloudinary.com/tellmedia/image/upload/v1581430268/shopmyinfluens/Brands/classic_brands/allbeauty1.png", "53", "Nombre de ventes");

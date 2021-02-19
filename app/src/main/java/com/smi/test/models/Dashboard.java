@@ -5,7 +5,7 @@ import android.os.Parcelable;
 
 import com.google.gson.annotations.Expose;
 
-public class Dashboard  implements Parcelable {
+public class Dashboard {
 
     private String ammount;
 
@@ -24,13 +24,6 @@ public class Dashboard  implements Parcelable {
         this.ammount = ammount;
         this.name = name;
     }
-
-    public Dashboard(String pic, String name, boolean isNew) {
-        this.pic = pic;
-        this.name = name;
-        this.isNew = isNew;
-    }
-
 
     public String getAmmount() {
         return ammount;
@@ -76,44 +69,7 @@ public class Dashboard  implements Parcelable {
     }
 
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
 
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.ammount);
-        dest.writeString(this.pic);
-        dest.writeString(this.name);
-        dest.writeByte(this.isNew ? (byte) 1 : (byte) 0);
-    }
-
-    public void readFromParcel(Parcel source) {
-        this.ammount = source.readString();
-        this.pic = source.readString();
-        this.name = source.readString();
-        this.isNew = source.readByte() != 0;
-    }
-
-    protected Dashboard(Parcel in) {
-        this.ammount = in.readString();
-        this.pic = in.readString();
-        this.name = in.readString();
-        this.isNew = in.readByte() != 0;
-    }
-
-    public static final Creator<Dashboard> CREATOR = new Creator<Dashboard>() {
-        @Override
-        public Dashboard createFromParcel(Parcel source) {
-            return new Dashboard(source);
-        }
-
-        @Override
-        public Dashboard[] newArray(int size) {
-            return new Dashboard[size];
-        }
-    };
 }
 
 
