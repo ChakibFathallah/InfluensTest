@@ -1,3 +1,46 @@
 <resources>
     <string name="app_name">TestInfluens</string>
+    <!-- SignIn Fragment -->
+        <string name="connexion">Connexion</string>
+        <string name="connecter_btn">Se connecter</string>
+        <string name="connecter">Besoin d\'un compte ? </string>
+        <string name="sinscrire"> S\’inscrire</string>
+        <string name="top_title">L’AGENCE DIGITALE DES INFLUENCEURS</string>
+        <string name="top_desc">Influens Network est l\’expert en contenu digital et marketing d\’influence ayant à cœur de créer des campagnes créatives, innovantes et performantes</string>
+        <string name="connx_fb_btn">CONNEXION AVEC FACEBOOK</string>
+        <string name="connx_google_btn">CONNEXION AVEC GOOGLE</string>
+        <string name="or">ou</string>
+        <string name="login">Login</string>
+        <string name="email">Email</string>
+        <string name="pwd">Mot de passe</string>
+        <string name="confirm_pwd">Confirmer le mot de passe</string>
+    <!-- Signin fragment-->
+
+    <!-- SignUp fragment-->
+        <string name="nom">Nom</string>
+        <string name="prenom">Prénom</string>
+        <string name="inscription">Inscription</string>
+        <string name="top_title_signup">Soyez les bienvenus</string>
+    <!-- SignUp fragment-->
+
+    <!-- Dashboard fragment-->
+        <string name="nos_marques">Nos Marques:</string>
+        <string name="premium_brands">Marques premium</string>
+        <string name="all_brands">Toutes les marques</string>
+    <!-- Dashboard fragment-->
+
+    <!--Dashboard fragment-->
+        <string name="new_brands">Nos nouvelles Marques:</string>
+    <!--Dashboard fragment-->
+
+    <!-- Firebase Database Nodes -->
+        <string name="dbnode_brands">brands</string>
+        <string name="dbnode_conversions">conversions</string>
+        <string name="dbnode_purchase">purchase</string>
+    <!-- Firebase Database Nodes -->
+
+
+
+
+
 </resources>

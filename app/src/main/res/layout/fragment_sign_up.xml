@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/ghost_white"
+    android:fillViewport="true"
+    android:overScrollMode="never"
+    android:scrollbars="none"
+    tools:context=".views.authentifiction.fragments.SignInFragment">
+
+
+    <LinearLayout
+        android:id="@+id/hole_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:id="@+id/top_container"
+            android:layout_width="match_parent"
+            android:layout_height="90dp"
+            android:background="@drawable/bg_grey_bottom_rounded">
+
+            <ImageView
+                android:id="@+id/back_btn"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="15dp"
+                android:layout_marginLeft="15dp"
+                android:background="@drawable/ic_arrow_left" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="@string/inscription"
+                android:textColor="@color/white"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+        </RelativeLayout>
+
+
+        <LinearLayout
+            android:id="@+id/container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp"
+                android:text="@string/top_title_signup"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+
+            <LinearLayout
+                android:id="@+id/et_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="20dp">
+
+                <!--   <TextView
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:fontFamily="@font/roboto_regular"
+                       android:text="@string/nom"
+                       android:textColor="@color/black"
+                       android:textSize="15sp" />
+
+                   <EditText
+                       android:id="@+id/name_et"
+                       android:layout_width="match_parent"
+                       android:layout_height="45dp"
+                       android:layout_marginTop="5dp"
+                       android:background="@drawable/bg_grey_bordered_et"
+                       android:fontFamily="@font/roboto_regular"
+                       android:hint="@string/nom"
+                       android:imeOptions="actionDone"
+                       android:overScrollMode="always"
+                       android:padding="10dp"
+                       android:scrollbarStyle="insideInset"
+                       android:scrollbars="vertical"
+                       android:singleLine="true"
+                       android:textColorHint="@color/gainsboro"
+                       android:textSize="15sp" />
+
+                   <TextView
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:layout_marginTop="20dp"
+                       android:fontFamily="@font/roboto_regular"
+                       android:text="@string/prenom"
+                       android:textColor="@color/black"
+                       android:textSize="15sp" />
+
+                   <EditText
+                       android:id="@+id/prenom_et"
+                       android:layout_width="match_parent"
+                       android:layout_height="45dp"
+                       android:layout_marginTop="5dp"
+                       android:background="@drawable/bg_grey_bordered_et"
+                       android:fontFamily="@font/roboto_regular"
+                       android:hint="@string/prenom"
+                       android:imeOptions="actionDone"
+                       android:overScrollMode="always"
+                       android:padding="10dp"
+                       android:scrollbarStyle="insideInset"
+                       android:scrollbars="vertical"
+                       android:singleLine="true"
+                       android:textColorHint="@color/gainsboro"
+                       android:textSize="15sp" />-->
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:fontFamily="@font/roboto_regular"
+                    android:text="@string/email"
+                    android:textColor="@color/black"
+                    android:textSize="15sp" />
+
+                <EditText
+                    android:id="@+id/email_et"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/bg_grey_bordered_et"
+                    android:fontFamily="@font/roboto_regular"
+                    android:hint="@string/email"
+                    android:imeOptions="actionDone"
+                    android:overScrollMode="always"
+                    android:padding="10dp"
+                    android:scrollbarStyle="insideInset"
+                    android:scrollbars="vertical"
+                    android:singleLine="true"
+                    android:textColorHint="@color/gainsboro"
+                    android:textSize="13sp" />
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:fontFamily="@font/roboto_regular"
+                    android:text="@string/pwd"
+                    android:textColor="@color/black"
+                    android:textSize="15sp" />
+
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:layout_marginTop="5dp"
+                    android:gravity="center_vertical"
+                    app:hintAnimationEnabled="false"
+                    app:hintEnabled="false"
+                    app:passwordToggleEnabled="true"
+                    app:passwordToggleTint="@color/gainsboro">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/pwd_et"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bg_grey_bordered_et"
+                        android:ellipsize="start"
+                        android:fontFamily="@font/roboto_regular"
+                        android:hint="@string/pwd"
+                        android:inputType="textPassword"
+                        android:overScrollMode="always"
+                        android:padding="10dp"
+                        android:scrollbarStyle="insideInset"
+                        android:scrollbars="vertical"
+                        android:singleLine="true"
+                        android:textColorHint="@color/gainsboro"
+                        android:textSize="15sp" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:fontFamily="@font/roboto_regular"
+                    android:text="@string/confirm_pwd"
+                    android:textColor="@color/black"
+                    android:textSize="15sp" />
+
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:layout_marginTop="5dp"
+                    android:gravity="center_vertical"
+                    app:hintAnimationEnabled="false"
+                    app:hintEnabled="false"
+                    app:passwordToggleEnabled="true"
+                    app:passwordToggleTint="@color/gainsboro">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/confirm_pwd_et"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bg_grey_bordered_et"
+                        android:ellipsize="start"
+                        android:fontFamily="@font/roboto_regular"
+                        android:hint="@string/confirm_pwd"
+                        android:inputType="textPassword"
+                        android:overScrollMode="always"
+                        android:padding="10dp"
+                        android:scrollbarStyle="insideInset"
+                        android:scrollbars="vertical"
+                        android:singleLine="true"
+                        android:textColorHint="@color/gainsboro"
+                        android:textSize="15sp" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="bottom"
+
+                android:orientation="vertical">
+
+                <Button
+                    android:id="@+id/signup_btn"
+                    style="?android:attr/borderlessButtonStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="20dp"
+                    android:layout_marginBottom="20dp"
+                    android:background="@drawable/bg_pink_rounded_bordered_btn"
+                    android:fontFamily="@font/roboto_medium"
+                    android:imeOptions="actionDone"
+                    android:text="@string/sinscrire"
+                    android:textAllCaps="false"
+                    android:textColor="@color/pink"
+                    android:textSize="18sp" />
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+</ScrollView>
